@@ -1,0 +1,20 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "debian/buster64"
+
+
+  config.vm.define "jenkins_server" do |jenkins_server|
+    jenkins_server.vm.provider "virtualbox" do |vb|
+       vb.memory = "1024"
+    end
+
+    jenkins_server.vm.network "private_network", ip: "192.168.63.14"
+    jenkins_server.vm.hostname = 'jenkins-server'
+
+    jenkins_server.vm.provision "shell", inline: <<-SHELL
+      echo "Adding SSH Key"
+      echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDvwDyZc39iCt18TlgUmt6B9SeXwJDMSGNZsNR1mkANbiiUwZWeKtK5MImgbeNSi6HA2rhC5jiJDzwdRqJOFhLbnmVIwvfyaoxPj893QoywpOnUfqtRASS70vDLGAGUYpuVPcy4X3vKO8BnJlsqj+eMHAxJ8dIpJyoMHIks5ZzaKBHKZA2TvMd0v+COX102EHTqvGBkzBdh9BqTHDv2LUaoiwQX76kxv04qAqegKQkuKQzngkPf2jnBKlOPBApZDXWDN1OQUTrvp+IIWNQlfKcJpu1/mwhKeUXLzm1axx+1Tjji8x24X/HAdoznvq4GgaXa5aNcbL5Lbo8sKYbCZzAymIYaR2ocyzO4sHHzruQFlgV0SpUXp7DsxFjKo7U3wDPwT4EbziAEtbXwOofzXlTZ4eQhY1oo5L18mvPmQ1cgHFKgWZQkViuL5FNgQ2fYbMJq3QulcGmAwrypeIJztUjetNy44GMGorZ2lZQtMQdeoqTJUPSh13BbYirPRzhjoOc=' >> /home/vagrant/.ssh/authorized_keys
+    SHELL
+  end
+
+end

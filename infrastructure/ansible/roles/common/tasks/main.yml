@@ -1,0 +1,9 @@
+---
+- name: Install Common Packages
+  apt:
+    pkg:
+      - vim
+      - git
+      - curl
+      - gpg
+    state: present
